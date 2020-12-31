@@ -306,14 +306,25 @@ public extension Swifter {
     - You are strongly encouraged to use a POST for larger requests.
     */
     func lookupUsers(for usersTag: UsersTag,
-                     includeEntities: Bool? = nil,
+                     expansions: Expansions? = nil,
+                     tweetFields: TweetFields? = nil,
+                     userFields: UserFields? = nil,
                      success: SuccessHandler? = nil,
                      failure: FailureHandler? = nil) {
-        let path = "users/lookup.json"
+        let path = usersTag.baseURL
 
         var parameters = [String: Any]()
         parameters[usersTag.key] = usersTag.value
-        parameters["include_entities"] ??= includeEntities
+        
+        if expansions != nil {
+            parameters["expansions"] = expansions?.getFieldsString()
+        }
+        if tweetFields != nil {
+            parameters["tweet.fields"] = tweetFields?.getFieldsString()
+        }
+        if userFields != nil {
+            parameters["user.fields"] = userFields?.getFieldsString()
+        }
 
         self.getJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in
 			success?(json)
@@ -327,19 +338,30 @@ public extension Swifter {
 
     You must be following a protected user to be able to see their most recent Tweet. If you don't follow a protected user, the users Tweet will be removed. A Tweet will not always be returned in the current_status field.
     */
+
     func showUser(_ userTag: UserTag,
-                  includeEntities: Bool? = nil,
+                  expansions: Expansions? = nil,
+                  tweetFields: TweetFields? = nil,
+                  userFields: UserFields? = nil,
                   success: SuccessHandler? = nil,
                   failure: FailureHandler? = nil) {
-        let path = "users/show.json"
+        let path = userTag.baseURL
 
         var parameters = [String: Any]()
-        parameters[userTag.key] = userTag.value
-        parameters["include_entities"] ??= includeEntities
+        if expansions != nil {
+            parameters["expansions"] = expansions?.getFieldsString()
+        }
+        if tweetFields != nil {
+            parameters["tweet.fields"] = tweetFields?.getFieldsString()
+        }
+        if userFields != nil {
+            parameters["user.fields"] = userFields?.getFieldsString()
+        }
+        
 
-		self.getJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in
-			success?(json)
-		}, failure: failure)
+        self.getJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in
+            success?(json)
+        }, failure: failure)
     }
 
     /**

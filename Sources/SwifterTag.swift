@@ -25,6 +25,13 @@ public enum UserTag {
         case .screenName(let user): return user
         }
     }
+    
+    var baseURL: String {
+        switch self {
+        case .id:           return "users/\(self.value)"
+        case .screenName:   return "users/by/username/\(self.value)"
+        }
+    }
 }
 
 public enum UsersTag {
@@ -33,8 +40,8 @@ public enum UsersTag {
     
     var key: String {
         switch self {
-        case .id:           return "user_id"
-        case .screenName:   return "screen_name"
+        case .id:           return "ids"
+        case .screenName:   return "usernames"
         }
     }
     
@@ -42,6 +49,14 @@ public enum UsersTag {
         switch self {
         case .id(let id):           return id.joined(separator: ",")
         case .screenName(let user): return user.joined(separator: ",")
+        }
+    }
+    
+    var baseURL: String {
+        switch self {
+        case .id:           return "users"
+        case .screenName:    return "users/by"
+        
         }
     }
 }
