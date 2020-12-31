@@ -69,22 +69,35 @@ public extension Swifter {
     This object contains an array of user IDs for users who have contributed to this status (an example of a status that has been contributed to is this one). In practice, there is usually only one ID in this array. The JSON renders as such "contributors":[8285392].
     */
     func getTweet(for id: String,
-                  trimUser: Bool? = nil,
-                  includeMyRetweet: Bool? = nil,
-                  includeEntities: Bool? = nil,
-                  includeExtAltText: Bool? = nil,
-                  tweetMode: TweetMode = TweetMode.default,
+                  expansions: Expansions? = nil,
+                  mediaFields: MediaFields? = nil,
+                  placeFields: PlaceFields? = nil,
+                  pollFields: PollFields? = nil,
+                  tweetFields: TweetFields? = nil,
+                  userFields: UserFields? = nil,
                   success: SuccessHandler? = nil,
                   failure: FailureHandler? = nil) {
-        let path = "statuses/show.json"
+        let path = "tweets/\(id)"
 
         var parameters = [String: Any]()
-        parameters["id"] = id
-        parameters["trim_user"] ??= trimUser
-        parameters["include_my_retweet"] ??= includeMyRetweet
-        parameters["include_entities"] ??= includeEntities
-		parameters["include_ext_alt_text"] ??= includeExtAltText
-        parameters["tweet_mode"] ??= tweetMode.stringValue
+        if expansions != nil {
+            parameters["expansions"] = expansions?.getFieldsString()
+        }
+        if mediaFields != nil {
+            parameters["media.fields"] = mediaFields?.getFieldsString()
+        }
+        if placeFields != nil {
+            parameters["place.fields"] = placeFields?.getFieldsString()
+        }
+        if pollFields != nil {
+            parameters["poll.fields"] = pollFields?.getFieldsString()
+        }
+        if tweetFields != nil {
+            parameters["tweet.fields"] = tweetFields?.getFieldsString()
+        }
+        if userFields != nil {
+            parameters["user.fields"] = userFields?.getFieldsString()
+        }
 
         self.getJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in success?(json) }, failure: failure)
     }
@@ -402,22 +415,36 @@ public extension Swifter {
     Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter. This method is especially useful to get the details (hydrate) a collection of Tweet IDs. GET statuses/show/:id is used to retrieve a single tweet object.
     */
     func lookupTweets(for tweetIDs: [String],
-                      includeEntities: Bool? = nil,
-                      trimUser: Bool? = nil,
-                      map: Bool? = nil,
-                      includeExtAltText: Bool? = nil,
-                      tweetMode: TweetMode = .default,
+                      expansions: Expansions? = nil,
+                      mediaFields: MediaFields? = nil,
+                      placeFields: PlaceFields? = nil,
+                      pollFields: PollFields? = nil,
+                      tweetFields: TweetFields? = nil,
+                      userFields: UserFields? = nil,
                       success: SuccessHandler? = nil,
                       failure: FailureHandler? = nil) {
-        let path = "statuses/lookup.json"
+        let path = "tweets"
 
         var parameters = [String: Any]()
-        parameters["id"] = tweetIDs.joined(separator: ",")
-		parameters["trim_user"] ??= trimUser
-        parameters["include_entities"] ??= includeEntities
-		parameters["include_ext_alt_text"] ??= includeExtAltText
-        parameters["map"] ??= map
-        parameters["tweet_mode"] ??= tweetMode.stringValue
+        parameters["ids"] = tweetIDs.joined(separator: ",")
+        if expansions != nil {
+            parameters["expansions"] = expansions?.getFieldsString()
+        }
+        if mediaFields != nil {
+            parameters["media.fields"] = mediaFields?.getFieldsString()
+        }
+        if placeFields != nil {
+            parameters["place.fields"] = placeFields?.getFieldsString()
+        }
+        if pollFields != nil {
+            parameters["poll.fields"] = pollFields?.getFieldsString()
+        }
+        if tweetFields != nil {
+            parameters["tweet.fields"] = tweetFields?.getFieldsString()
+        }
+        if userFields != nil {
+            parameters["user.fields"] = userFields?.getFieldsString()
+        }
         
         self.getJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in
 			success?(json)
