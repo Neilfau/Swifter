@@ -25,10 +25,13 @@ public class TweetFields {
     let promotedMetrics: Bool
     let possiblySensitive: Bool
     let referencedTweets: Bool
+    let replySettings: Bool
     let source: Bool
     let text: Bool
     let withHeld: Bool
     
+    
+    /// Used for user lookup parameters
     public init(attachments: Bool = false,
                 authorId: Bool = false,
                 contextAnnotations: Bool = false,
@@ -65,6 +68,51 @@ public class TweetFields {
         self.promotedMetrics = promotedMetrics
         self.possiblySensitive = possiblySensitive
         self.referencedTweets = referencedTweets
+        self.replySettings = false
+        self.source = source
+        self.text = text
+        self.withHeld = withHeld
+    }
+    
+    /// Used for follower lookup parameters
+    public init(attachments: Bool = false,
+                authorId: Bool = false,
+                contextAnnotations: Bool = false,
+                conversationId: Bool = false,
+                createdAt: Bool = false,
+                entities: Bool = false,
+                geo: Bool = false,
+                id: Bool = false,
+                inReplyToUserId: Bool = false,
+                lang: Bool = false,
+                nonPublicMetrics: Bool = false,
+                publicMetrics: Bool = false,
+                organicMetrics: Bool = false,
+                promotedMetrics: Bool = false,
+                possiblySensitive: Bool = false,
+                referencedTweets: Bool = false,
+                replySettings: Bool = false,
+                source: Bool = false,
+                text: Bool = false,
+                withHeld: Bool = false) {
+        
+        self.attachments = attachments
+        self.authorId = authorId
+        self.contextAnnotations = contextAnnotations
+        self.conversationId = conversationId
+        self.createdAt = createdAt
+        self.entities = entities
+        self.geo = geo
+        self.id = id
+        self.inReplyToUserId = inReplyToUserId
+        self.lang = lang
+        self.nonPublicMetrics = nonPublicMetrics
+        self.publicMetrics = publicMetrics
+        self.organicMetrics = organicMetrics
+        self.promotedMetrics = promotedMetrics
+        self.possiblySensitive = possiblySensitive
+        self.referencedTweets = referencedTweets
+        self.replySettings = replySettings
         self.source = source
         self.text = text
         self.withHeld = withHeld

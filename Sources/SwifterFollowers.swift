@@ -39,61 +39,6 @@ public extension Swifter {
 
         self.getJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in success?(json) }, failure: failure)
     }
-
-    /**
-    GET    friends/ids
-    Returns Users (*: user IDs for followees)
-
-    Returns a cursored collection of user IDs for every user the specified user is following (otherwise known as their "friends").
-
-    At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests. See Using cursors to navigate collections for more information.
-
-    This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.
-    */
-    func getUserFollowingIDs(for userTag: UserTag,
-                             cursor: String? = nil,
-                             count: Int? = nil,
-                             success: CursorSuccessHandler? = nil,
-                             failure: FailureHandler? = nil) {
-        let path = "friends/ids.json"
-        
-        var parameters = [String: Any]()
-        parameters[userTag.key] = userTag.value
-        parameters["cursor"] ??= cursor
-        parameters["stringify_ids"] = true
-        parameters["count"] ??= count
-        
-        self.getJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in
-            success?(json["ids"], json["previous_cursor_str"].string, json["next_cursor_str"].string)
-            }, failure: failure)
-    }
-    
-    /**
-    GET    followers/ids
-    
-    Returns a cursored collection of user IDs for every user following the specified user.
-    
-    At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. Results are given in groups of 5,000 user IDs and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests. See Using cursors to navigate collections for more information.
-    
-    This method is especially powerful when used in conjunction with GET users/lookup, a method that allows you to convert user IDs into full user objects in bulk.
-    */
-    func getUserFollowersIDs(for userTag: UserTag,
-                             cursor: String? = nil,
-                             count: Int? = nil,
-                             success: CursorSuccessHandler? = nil,
-                             failure: FailureHandler? = nil) {
-        let path = "followers/ids.json"
-        
-        var parameters = [String: Any]()
-        parameters[userTag.key] = userTag.value
-        parameters["cursor"] ??= cursor
-        parameters["stringify_ids"] = true
-        parameters["count"] ??= count
-        
-        self.getJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in            
-            success?(json["ids"], json["previous_cursor_str"].string, json["next_cursor_str"].string)
-            }, failure: failure)
-    }
     
     /**
     GET    friendships/incoming
@@ -236,23 +181,34 @@ public extension Swifter {
     At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests. See Using cursors to navigate collections for more information.
     */
     func getUserFollowing(for userTag: UserTag,
-                          cursor: String? = nil,
-                          count: Int? = nil,
-                          skipStatus: Bool? = nil,
-                          includeUserEntities: Bool? = nil,
-                          success: CursorSuccessHandler? = nil,
+                          expansion: Expansions? = nil,
+                          maxResults: Int? = nil,
+                          paginationToken: String? = nil,
+                          tweetFields: TweetFields? = nil,
+                          userFields: UserFields? = nil,
+                          success: SuccessHandler? = nil,
                           failure: FailureHandler? = nil) {
-        let path = "friends/list.json"
+        let path = "users/\(userTag.value)/following"
 
         var parameters = [String: Any]()
-        parameters[userTag.key] = userTag.value
-        parameters["cursor"] ??= cursor
-        parameters["count"] ??= count
-        parameters["skip_status"] ??= skipStatus
-        parameters["include_user_entities"] ??= includeUserEntities
+        if expansion != nil {
+            parameters["expanisons"] = expansion?.getFieldsString()
+        }
+        if maxResults != nil {
+            parameters["max_results"] = String(maxResults!)
+        }
+        if paginationToken != nil {
+            parameters["pagination_token"] = paginationToken
+        }
+        if tweetFields != nil {
+            parameters["tweet.fields"] = tweetFields?.getFieldsString()
+        }
+        if userFields != nil {
+            parameters["user.fields"] = userFields?.getFieldsString()
+        }
 
         self.getJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in
-            success?(json["users"], json["previous_cursor_str"].string, json["next_cursor_str"].string)
+            success?(json)
             }, failure: failure)
     }
 
@@ -264,23 +220,34 @@ public extension Swifter {
     At this time, results are ordered with the most recent following first — however, this ordering is subject to unannounced change and eventual consistency issues. Results are given in groups of 20 users and multiple "pages" of results can be navigated through using the next_cursor value in subsequent requests. See Using cursors to navigate collections for more information.
     */
     func getUserFollowers(for userTag: UserTag,
-                          cursor: String? = nil,
-                          count: Int? = nil,
-                          skipStatus: Bool? = nil,
-                          includeUserEntities: Bool? = nil,
-                          success: CursorSuccessHandler? = nil,
+                          expansion: Expansions? = nil,
+                          maxResults: Int? = nil,
+                          paginationToken: String? = nil,
+                          tweetFields: TweetFields? = nil,
+                          userFields: UserFields? = nil,
+                          success: SuccessHandler? = nil,
                           failure: FailureHandler? = nil) {
-        let path = "followers/list.json"
+        let path = "users/\(userTag.value)/followers"
 
         var parameters = [String: Any]()
-        parameters[userTag.key] = userTag.value
-        parameters["cursor"] ??= cursor
-        parameters["count"] ??= count
-        parameters["skip_status"] ??= skipStatus
-        parameters["include_user_entities"] ??= includeUserEntities
+        if expansion != nil {
+            parameters["expanisons"] = expansion?.getFieldsString()
+        }
+        if maxResults != nil {
+            parameters["max_results"] = String(maxResults!)
+        }
+        if paginationToken != nil {
+            parameters["pagination_token"] = paginationToken
+        }
+        if tweetFields != nil {
+            parameters["tweet.fields"] = tweetFields?.getFieldsString()
+        }
+        if userFields != nil {
+            parameters["user.fields"] = userFields?.getFieldsString()
+        }
 
         self.getJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in
-            success?(json["users"], json["previous_cursor_str"].string, json["next_cursor_str"].string)
+            success?(json)
             }, failure: failure)
     }
 
