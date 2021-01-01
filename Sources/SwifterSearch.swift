@@ -38,37 +38,39 @@ public extension Swifter {
 
      */
     func searchTweet(using query: String,
-                     geocode: String? = nil,
-                     lang: String? = nil,
-                     locale: String? = nil,
-                     resultType: String? = nil,
-                     count: Int? = nil,
-                     until: String? = nil,
+                     endTime: String? = nil,
+                     expansions: Expansions? = nil,
+                     maxResults: Int? = nil,
+                     mediaFields: MediaFields? = nil,
+                     nextToken: String? = nil,
+                     placeFields: PlaceFields? = nil,
+                     pollFields: PollFields? = nil,
                      sinceID: String? = nil,
-                     maxID: String? = nil,
-                     includeEntities: Bool? = nil,
-                     callback: String? = nil,
-                     tweetMode: TweetMode = TweetMode.default,
-                     success: SearchResultHandler? = nil,
+                     startTime: String? = nil,
+                     tweetFields: TweetFields? = nil,
+                     untilId: String? = nil,
+                     userFields: UserFields? = nil,
+                     success: SuccessHandler? = nil,
                      failure: @escaping FailureHandler) {
-        let path = "search/tweets.json"
+        let path = "tweets/search/recent"
 
         var parameters = [String: Any]()
-        parameters["q"] = query
-        parameters["geocode"] ??= geocode
-        parameters["lang"] ??= lang
-        parameters["locale"] ??= locale
-        parameters["result_type"] ??= resultType
-        parameters["count"] ??= count
-        parameters["until"] ??= until
+        parameters["query"] = query
+        parameters["end_time"] ??= endTime
+        parameters["expansions"] ??= expansions?.getFieldsString()
+        parameters["max_results"] ??= maxResults
+        parameters["media.fields"] ??= mediaFields?.getFieldsString()
+        parameters["next_token"] ??= nextToken
+        parameters["place.fields"] ??= placeFields?.getFieldsString()
+        parameters["poll.fields"] ??= pollFields?.getFieldsString()
         parameters["since_id"] ??= sinceID
-        parameters["max_id"] ??= maxID
-        parameters["include_entities"] ??= includeEntities
-        parameters["callback"] ??= callback
-        parameters["tweet_mode"] ??= tweetMode.stringValue
+        parameters["start_time"] ??= startTime
+        parameters["tweet.fields"] ??= tweetFields?.getFieldsString()
+        parameters["until_id"] ??= untilId
+        parameters["user.fields"] ??= userFields?.getFieldsString()
 
         self.getJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in
-            success?(json["statuses"], json["search_metadata"])
+            success?(json)
             }, failure: failure)
     }
     
