@@ -31,27 +31,34 @@ public extension Swifter {
     // per path and its parameters
     private func getTimeline(at path: String,
                              parameters: [String: Any],
-                             count: Int? = nil,
-                             sinceID: String? = nil,
-                             maxID: String? = nil,
-                             trimUser: Bool? = nil,
-                             excludeReplies: Bool? = nil,
-                             includeRetweets: Bool? = nil,
-                             contributorDetails: Bool? = nil,
-                             includeEntities: Bool? = nil,
-                             tweetMode: TweetMode = .default,
+                             endTime: String? = nil,
+                             exclude: ExcludeFields? = nil,
+                             expansions: Expansions? = nil,
+                             maxResults: Int? = nil,
+                             mediaFields: MediaFields? = nil,
+                             paginationToken: String? = nil,
+                             placeFields: PlaceFields? = nil,
+                             pollFields: PollFields? = nil,
+                             sinceId: String? = nil,
+                             startTime: String? = nil,
+                             tweetFields: TweetFields? = nil,
+                             untilId: String? = nil,
+                             userFields: UserFields? = nil,
                              success: SuccessHandler? = nil,
                              failure: FailureHandler? = nil) {
         var params = parameters
-        params["count"] ??= count
-        params["since_id"] ??= sinceID
-        params["max_id"] ??= maxID
-        params["trim_user"] ??= trimUser
-        params["exclude_replies"] ??= excludeReplies
-        params["include_rts"] ??= includeRetweets
-        params["contributor_details"] ??= contributorDetails
-        params["include_entities"] ??= includeEntities
-        params["tweet_mode"] ??= tweetMode.stringValue
+        params["end_time"] ??= endTime
+        params["exclude"] ??= exclude?.getFieldsString()
+        params["expansions"] ??= expansions?.getFieldsString()
+        params["max_results"] ??= maxResults
+        params["media.fields"] ??= mediaFields?.getFieldsString()
+        params["pagination_token"] ??= paginationToken
+        params["place.fields"] ??= placeFields?.getFieldsString()
+        params["poll.fields"] ??= pollFields?.getFieldsString()
+        params["since_id"] ??= sinceId
+        params["tweet.fields"] ??= tweetFields?.getFieldsString()
+        params["until_id"] ??= untilId
+        params["user.fields"] ??= userFields?.getFieldsString()
         
         self.getJSON(path: path, baseURL: .api, parameters: params, success: { json, _ in
             success?(json)
@@ -68,24 +75,37 @@ public extension Swifter {
      
      This method can only return up to 800 tweets.
      */
-    func getMentionsTimelineTweets(count: Int? = nil,
-                                   sinceID: String? = nil,
-                                   maxID: String? = nil,
-                                   trimUser: Bool? = nil,
-                                   contributorDetails: Bool? = nil,
-                                   includeEntities: Bool? = nil,
-                                   tweetMode: TweetMode = TweetMode.default,
+    func getMentionsTimeline(for id: String,
+                                   endTime: String? = nil,
+                                   exclude: ExcludeFields? = nil,
+                                   expansions: Expansions? = nil,
+                                   maxResults: Int? = nil,
+                                   mediaFields: MediaFields? = nil,
+                                   paginationToken: String? = nil,
+                                   placeFields: PlaceFields? = nil,
+                                   pollFields: PollFields? = nil,
+                                   sinceId: String? = nil,
+                                   startTime: String? = nil,
+                                   tweetFields: TweetFields? = nil,
+                                   untilId: String? = nil,
+                                   userFields: UserFields? = nil,
                                    success: SuccessHandler? = nil,
-                                   failure: FailureHandler?) {
-        self.getTimeline(at: "statuses/mentions_timeline.json",
+                                   failure: FailureHandler? = nil) {
+        self.getTimeline(at: "users/\(id)/mentions",
                          parameters: [:],
-                         count: count,
-                         sinceID: sinceID,
-                         maxID: maxID,
-                         trimUser: trimUser,
-                         contributorDetails: contributorDetails,
-                         includeEntities: includeEntities,
-                         tweetMode: tweetMode,
+                         endTime: endTime,
+                         exclude: exclude,
+                         expansions: expansions,
+                         maxResults: maxResults,
+                         mediaFields: mediaFields,
+                         paginationToken: paginationToken,
+                         placeFields: placeFields,
+                         pollFields: pollFields,
+                         sinceId: sinceId,
+                         startTime: startTime,
+                         tweetFields: tweetFields,
+                         untilId: untilId,
+                         userFields: userFields,
                          success: success,
                          failure: failure)
     }
@@ -103,32 +123,38 @@ public extension Swifter {
      
      This method can only return up to 3,200 of a user's most recent Tweets. Native retweets of other statuses by the user is included in this total, regardless of whether include_rts is set to false when requesting this resource.
      */
-    func getTimeline(for userTag: UserTag,
-                     customParam: [String: Any] = [:],
-                     count: Int? = nil,
-                     sinceID: String? = nil,
-                     maxID: String? = nil,
-                     trimUser: Bool? = nil,
-                     excludeReplies: Bool? = nil,
-                     includeRetweets: Bool? = nil,
-                     contributorDetails: Bool? = nil,
-                     includeEntities: Bool? = nil,
-                     tweetMode: TweetMode = .default,
+    func getTimeline(for id: String,
+                     endTime: String? = nil,
+                     exclude: ExcludeFields? = nil,
+                     expansions: Expansions? = nil,
+                     maxResults: Int? = nil,
+                     mediaFields: MediaFields? = nil,
+                     paginationToken: String? = nil,
+                     placeFields: PlaceFields? = nil,
+                     pollFields: PollFields? = nil,
+                     sinceId: String? = nil,
+                     startTime: String? = nil,
+                     tweetFields: TweetFields? = nil,
+                     untilId: String? = nil,
+                     userFields: UserFields? = nil,
                      success: SuccessHandler? = nil,
                      failure: FailureHandler? = nil) {
-        var parameters: [String: Any] = customParam
-        parameters[userTag.key] = userTag.value
-        self.getTimeline(at: "statuses/user_timeline.json",
-                         parameters: parameters,
-                         count: count,
-                         sinceID: sinceID,
-                         maxID: maxID,
-                         trimUser: trimUser,
-                         excludeReplies: excludeReplies,
-                         includeRetweets: includeRetweets,
-                         contributorDetails: contributorDetails,
-                         includeEntities: includeEntities,
-                         tweetMode: tweetMode,
+        
+        self.getTimeline(at: "users/\(id)/tweets",
+                         parameters: [:],
+                         endTime: endTime,
+                         exclude: exclude,
+                         expansions: expansions,
+                         maxResults: maxResults,
+                         mediaFields: mediaFields,
+                         paginationToken: paginationToken,
+                         placeFields: placeFields,
+                         pollFields: pollFields,
+                         sinceId: sinceId,
+                         startTime: startTime,
+                         tweetFields: tweetFields,
+                         untilId: untilId,
+                         userFields: userFields,
                          success: success,
                          failure: failure)
     }
@@ -151,17 +177,17 @@ public extension Swifter {
                          tweetMode: TweetMode = TweetMode.default,
                          success: SuccessHandler? = nil,
                          failure: FailureHandler? = nil) {
-        self.getTimeline(at: "statuses/home_timeline.json",
-                         parameters: [:],
-                         count: count,
-                         sinceID: sinceID,
-                         maxID: maxID,
-                         trimUser: trimUser,
-                         contributorDetails: contributorDetails,
-                         includeEntities: includeEntities,
-                         tweetMode: tweetMode,
-                         success: success,
-                         failure: failure)
+//        self.getTimeline(at: "statuses/home_timeline.json",
+//                         parameters: [:],
+//                         count: count,
+//                         sinceID: sinceID,
+//                         maxID: maxID,
+//                         trimUser: trimUser,
+//                         contributorDetails: contributorDetails,
+//                         includeEntities: includeEntities,
+//                         tweetMode: tweetMode,
+//                         success: success,
+//                         failure: failure)
     }
     
     /**
@@ -178,17 +204,17 @@ public extension Swifter {
                          tweetMode: TweetMode = .default,
                          success: SuccessHandler? = nil,
                          failure: FailureHandler? = nil) {
-        self.getTimeline(at: "statuses/retweets_of_me.json",
-                         parameters: [:],
-                         count: count,
-                         sinceID: sinceID,
-                         maxID: maxID,
-                         trimUser: trimUser,
-                         contributorDetails: contributorDetails,
-                         includeEntities: includeEntities,
-                         tweetMode: tweetMode,
-                         success: success,
-                         failure: failure)
+//        self.getTimeline(at: "statuses/retweets_of_me.json",
+//                         parameters: [:],
+//                         count: count,
+//                         sinceID: sinceID,
+//                         maxID: maxID,
+//                         trimUser: trimUser,
+//                         contributorDetails: contributorDetails,
+//                         includeEntities: includeEntities,
+//                         tweetMode: tweetMode,
+//                         success: success,
+//                         failure: failure)
     }
     
 }

@@ -10,6 +10,8 @@
 		1C3A9D5424CC457C00747211 /* SwifterMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3A9D5124CC36DE00747211 /* SwifterMedia.swift */; };
 		1C3A9D5524CC457D00747211 /* SwifterMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3A9D5124CC36DE00747211 /* SwifterMedia.swift */; };
 		4ED2E25C215E1E1A00E2084A /* JSONTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED2E25B215E1E1A00E2084A /* JSONTest.swift */; };
+		64182956259F3D400048B81E /* ExcludeFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64182955259F3D400048B81E /* ExcludeFields.swift */; };
+		64182957259F3D400048B81E /* ExcludeFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64182955259F3D400048B81E /* ExcludeFields.swift */; };
 		64185DDB259D9BB200F0F0E3 /* Expansions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64185DDA259D9BB200F0F0E3 /* Expansions.swift */; };
 		64185DDC259D9BB200F0F0E3 /* Expansions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64185DDA259D9BB200F0F0E3 /* Expansions.swift */; };
 		64185DEC259DA3CB00F0F0E3 /* TweetFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64185DEB259DA3CB00F0F0E3 /* TweetFields.swift */; };
@@ -166,6 +168,7 @@
 /* Begin PBXFileReference section */
 		1C3A9D5124CC36DE00747211 /* SwifterMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwifterMedia.swift; sourceTree = "<group>"; };
 		4ED2E25B215E1E1A00E2084A /* JSONTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTest.swift; sourceTree = "<group>"; };
+		64182955259F3D400048B81E /* ExcludeFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcludeFields.swift; sourceTree = "<group>"; };
 		64185DDA259D9BB200F0F0E3 /* Expansions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expansions.swift; sourceTree = "<group>"; };
 		64185DEB259DA3CB00F0F0E3 /* TweetFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetFields.swift; sourceTree = "<group>"; };
 		64185DF1259DA97E00F0F0E3 /* UserFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFields.swift; sourceTree = "<group>"; };
@@ -358,6 +361,7 @@
 				8BF1D6871948C11E00E3AA64 /* SwifterCredential.swift */,
 				8B548F581945325E00EE2927 /* SwifterAuth.swift */,
 				8B548F5B1945331D00EE2927 /* SwifterTimelines.swift */,
+				64182955259F3D400048B81E /* ExcludeFields.swift */,
 				8BCF43161947450A00E63301 /* SwifterTweets.swift */,
 				8BCF431919475D3C00E63301 /* SwifterSearch.swift */,
 				8BCF431C1947907300E63301 /* SwifterMessages.swift */,
@@ -687,6 +691,7 @@
 				8B548F591945325E00EE2927 /* SwifterAuth.swift in Sources */,
 				8BCF431D1947907300E63301 /* SwifterMessages.swift in Sources */,
 				8B9F51531944A8DC00894629 /* String++.swift in Sources */,
+				64182956259F3D400048B81E /* ExcludeFields.swift in Sources */,
 				8BF1D67C1948882700E3AA64 /* SwifterSpam.swift in Sources */,
 				8BCF431A19475D3C00E63301 /* SwifterSearch.swift in Sources */,
 				8B33CA3F19587C6D00739FCB /* JSON.swift in Sources */,
@@ -736,6 +741,7 @@
 				8B548F5A1945325E00EE2927 /* SwifterAuth.swift in Sources */,
 				8BCF431E1947907300E63301 /* SwifterMessages.swift in Sources */,
 				8B9F51541944A8DC00894629 /* String++.swift in Sources */,
+				64182957259F3D400048B81E /* ExcludeFields.swift in Sources */,
 				8BF1D67D1948882700E3AA64 /* SwifterSpam.swift in Sources */,
 				8BCF431B19475D3C00E63301 /* SwifterSearch.swift in Sources */,
 				8B33CA4019587C6D00739FCB /* JSON.swift in Sources */,
