@@ -534,4 +534,24 @@ public extension Swifter {
             }, failure: failure)
     }
     
+    // MARK: - Like Tweets
+    func likeTweet(userId: String,
+                   tweetId: String,
+                   success: SuccessHandler? = nil,
+                   failure: FailureHandler? = nil) {
+        let path = "users/\(userId)/likes"
+        
+        var parameters = [String: Any]()
+        parameters["tweet_id"] = tweetId
+        self.postJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in success?(json) }, failure: failure)
+    }
+    
+    func unlikeTweet(userId: String,
+                   tweetId: String,
+                   success: SuccessHandler? = nil,
+                   failure: FailureHandler? = nil) {
+        let path = "users/\(userId)/likes/\(tweetId)"
+    
+        self.deleteJSON(path: path, baseURL: .api, parameters: [:], success: { json, _ in success?(json) }, failure: failure)
+    }
 }
