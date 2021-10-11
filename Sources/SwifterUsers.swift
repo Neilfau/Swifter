@@ -543,7 +543,7 @@ public extension Swifter {
         
         var parameters = [String: Any]()
         parameters["tweet_id"] = tweetId
-        self.postJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in success?(json) }, failure: failure)
+        self.postJSON(path: path, baseURL: .api, parameters: [:], body: parameters, success: { json, _ in success?(json) }, failure: failure)
     }
     
     func unlikeTweet(userId: String,

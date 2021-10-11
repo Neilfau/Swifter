@@ -47,6 +47,7 @@ public protocol SwifterClientProtocol {
     func post(_ path: String,
               baseURL: TwitterURL,
               parameters: [String: Any],
+              body: [String: Any]?,
               uploadProgress: HTTPRequest.UploadProgressHandler?,
               downloadProgress: HTTPRequest.DownloadProgressHandler?,
               success: HTTPRequest.SuccessHandler?,

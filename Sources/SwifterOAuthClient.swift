@@ -75,6 +75,7 @@ internal class OAuthClient: SwifterClientProtocol, SwifterAppProtocol {
     func post(_ path: String,
               baseURL: TwitterURL,
               parameters: [String: Any],
+              body: [String: Any]? = nil,
               uploadProgress: HTTPRequest.UploadProgressHandler?,
               downloadProgress: HTTPRequest.DownloadProgressHandler?,
               success: HTTPRequest.SuccessHandler?,

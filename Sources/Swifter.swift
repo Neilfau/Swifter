@@ -155,6 +155,7 @@ public class Swifter {
                               baseURL: TwitterURL,
                               method: HTTPMethodType,
                               parameters: [String: Any],
+                              body: [String: Any]? = nil,
                               uploadProgress: HTTPRequest.UploadProgressHandler? = nil,
                               downloadProgress: JSONSuccessHandler? = nil,
                               success: JSONSuccessHandler? = nil,
@@ -191,7 +192,7 @@ public class Swifter {
                                    uploadProgress: uploadProgress, downloadProgress: jsonDownloadProgressHandler,
                                    success: jsonSuccessHandler, failure: failure)
         case .POST:
-            return self.client.post(path, baseURL: baseURL, parameters: parameters,
+            return self.client.post(path, baseURL: baseURL, parameters: parameters, body: body,
                                     uploadProgress: uploadProgress, downloadProgress: jsonDownloadProgressHandler,
                                     success: jsonSuccessHandler, failure: failure)
         case .DELETE:
@@ -239,11 +240,12 @@ public class Swifter {
     internal func postJSON(path: String,
                            baseURL: TwitterURL,
                            parameters: [String: Any],
+                           body: [String: Any]? = nil,
                            uploadProgress: HTTPRequest.UploadProgressHandler? = nil,
                            downloadProgress: JSONSuccessHandler? = nil,
                            success: JSONSuccessHandler?,
                            failure: HTTPRequest.FailureHandler?) -> HTTPRequest {
-        return self.jsonRequest(path: path, baseURL: baseURL, method: .POST, parameters: parameters,
+        return self.jsonRequest(path: path, baseURL: baseURL, method: .POST, parameters: parameters, body: body,
                                 uploadProgress: uploadProgress, downloadProgress: downloadProgress,
                                 success: success, failure: failure)
     }

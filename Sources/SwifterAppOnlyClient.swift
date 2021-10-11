@@ -65,6 +65,7 @@ internal class AppOnlyClient: SwifterClientProtocol, SwifterAppProtocol {
     func post(_ path: String,
               baseURL: TwitterURL,
               parameters: [String: Any],
+              body: [String: Any]? = nil,
               uploadProgress: HTTPRequest.UploadProgressHandler?,
               downloadProgress: HTTPRequest.DownloadProgressHandler?,
               success: HTTPRequest.SuccessHandler?,
@@ -76,6 +77,10 @@ internal class AppOnlyClient: SwifterClientProtocol, SwifterAppProtocol {
         request.successHandler = success
         request.failureHandler = failure
         request.dataEncoding = self.dataEncoding
+        
+        if let body = body {
+            request.jsonBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+        }
         
         if let bearerToken = self.credential?.accessToken?.key {
             request.headers = ["Authorization": "Bearer \(bearerToken)"];

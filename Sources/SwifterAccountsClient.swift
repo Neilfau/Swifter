@@ -55,7 +55,7 @@ internal class AccountsClient: SwifterClientProtocol {
         return request
     }
     
-    func post(_ path: String, baseURL: TwitterURL, parameters: [String: Any], uploadProgress: HTTPRequest.UploadProgressHandler?, downloadProgress: HTTPRequest.DownloadProgressHandler?, success: HTTPRequest.SuccessHandler?, failure: HTTPRequest.FailureHandler?) -> HTTPRequest {
+    func post(_ path: String, baseURL: TwitterURL, parameters: [String: Any], body: [String: Any]? = nil, uploadProgress: HTTPRequest.UploadProgressHandler?, downloadProgress: HTTPRequest.DownloadProgressHandler?, success: HTTPRequest.SuccessHandler?, failure: HTTPRequest.FailureHandler?) -> HTTPRequest {
         let url = URL(string: path, relativeTo: baseURL.url)
         
         var params = parameters

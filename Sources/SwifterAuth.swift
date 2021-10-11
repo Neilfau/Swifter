@@ -243,7 +243,7 @@ public extension Swifter {
         let path = "oauth/request_token"
         let parameters =  ["oauth_callback": callbackURL.absoluteString]
         
-        self.client.post(path, baseURL: .oauth, parameters: parameters, uploadProgress: nil, downloadProgress: nil, success: { data, response in
+        self.client.post(path, baseURL: .oauth, parameters: parameters, body: nil, uploadProgress: nil, downloadProgress: nil, success: { data, response in
             let responseString = String(data: data, encoding: .utf8)!
             let accessToken = Credential.OAuthAccessToken(queryString: responseString)
             success(accessToken, response)
@@ -255,7 +255,7 @@ public extension Swifter {
             let path =  "oauth/access_token"
             let parameters = ["oauth_token": requestToken.key, "oauth_verifier": verifier]
             
-            self.client.post(path, baseURL: .oauth, parameters: parameters, uploadProgress: nil, downloadProgress: nil, success: { data, response in
+            self.client.post(path, baseURL: .oauth, parameters: parameters, body: nil, uploadProgress: nil, downloadProgress: nil, success: { data, response in
                 
                 let responseString = String(data: data, encoding: .utf8)!
                 let accessToken = Credential.OAuthAccessToken(queryString: responseString)
