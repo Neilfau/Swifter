@@ -124,6 +124,10 @@ internal class OAuthClient: SwifterClientProtocol, SwifterAppProtocol {
             request.add(body: jsonData)
         }
         
+        if let body = body {
+            request.jsonBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+        }
+        
         request.start()
         return request
     }
