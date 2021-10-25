@@ -554,4 +554,25 @@ public extension Swifter {
     
         self.deleteJSON(path: path, baseURL: .api, parameters: [:], success: { json, _ in success?(json) }, failure: failure)
     }
+    
+    // MARK: - Retweets
+    func retweet(userId: String,
+                   tweetId: String,
+                   success: SuccessHandler? = nil,
+                   failure: FailureHandler? = nil) {
+        let path = "users/\(userId)/retweets"
+        
+        var parameters = [String: Any]()
+        parameters["tweet_id"] = tweetId
+        self.postJSON(path: path, baseURL: .api, parameters: [:], body: parameters, success: { json, _ in success?(json) }, failure: failure)
+    }
+    
+    func unretweet(userId: String,
+                     tweetId: String,
+                     success: SuccessHandler? = nil,
+                     failure: FailureHandler? = nil) {
+        let path = "users/\(userId)/retweets/\(tweetId)"
+        
+        self.deleteJSON(path: path, baseURL: .api, parameters: [:], success: { json, _ in success?(json) }, failure: failure)
+    }
 }
