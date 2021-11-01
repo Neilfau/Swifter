@@ -184,7 +184,7 @@ public extension Swifter {
             parameters["media_ids"] = mediaIDs.joined(separator: ",")
         }
 
-        self.postJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in
+        self.postJSON(path: path, baseURL: .apiV1, parameters: parameters, success: { json, _ in
             success?(json)
         }, failure: failure)
     }
@@ -222,7 +222,7 @@ public extension Swifter {
             parameters["display_coordinates"] = true
         }
 
-        self.postJSON(path: path, baseURL: .api, parameters: parameters, success: { json, _ in
+        self.postJSON(path: path, baseURL: .apiV1, parameters: parameters, success: { json, _ in
             success?(json)
             }, failure: failure)
     }
